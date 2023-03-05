@@ -1,30 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:scaled_list/scaled_list.dart';
+import 'package:get/get.dart';
 import 'package:uosapp/api_Handler/Api_Content.dart';
+import 'package:uosapp/api_Handler/Models/loginmodel.dart';
 import 'package:uosapp/screens/Home/login/login.dart';
 import 'package:uosapp/screens/Home_View/Content_view.dart';
 import 'package:uosapp/screens/Home_View/attendance_details.dart';
 
 import 'package:uosapp/api_Handler/Api_LoginService.dart';
+import 'package:uosapp/screens/Home_View/attendance_report.dart';
 import '../../api_Handler/Api_LoginService.dart';
 import '../../api_Handler/Models/contentmodel.dart';
 import '../../api_Handler/Models/detailmodel.dart';
+import '../../static/input_field.dart';
+import '../../static/large_button.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+class Home_screen extends StatefulWidget {
+  const Home_screen({super.key, Object? user});
 
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  State<Home_screen> createState() => _Home_screenState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _Home_screenState extends State<Home_screen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    PersistentTabController _controller;
+    _controller = PersistentTabController(initialIndex: 0);
+
+    return PersistentTabView(
+      context,
+      // controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarItem(),
+
+      navBarStyle: NavBarStyle.style16,
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(1.0),
+        colorBehindNavBar: Colors.white,
+      ),
+    );
   }
+}
+
+List<PersistentBottomNavBarItem> _navBarItem() {
+  return [
+    PersistentBottomNavBarItem(
+      icon: Icon(Icons.home),
+      title: ('Home'),
+      activeColorSecondary: Colors.amber,
+      inactiveColorPrimary: Colors.black,
+    ),
+    PersistentBottomNavBarItem(
+      icon: Icon(Icons.chat),
+      title: ('Subjects'),
+      activeColorSecondary: Colors.amber,
+      inactiveColorPrimary: Colors.black,
+    ),
+    PersistentBottomNavBarItem(
+      icon: Icon(Icons.diamond),
+      activeColorPrimary: Colors.amber,
+      activeColorSecondary: Colors.white,
+      inactiveColorPrimary: Colors.black,
+    ),
+    PersistentBottomNavBarItem(
+      icon: Icon(Icons.list_alt),
+      title: ('Attendance'),
+      activeColorSecondary: Colors.amber,
+      inactiveColorPrimary: Colors.black,
+    ),
+    PersistentBottomNavBarItem(
+      icon: Icon(Icons.settings),
+      title: ('About'),
+      activeColorSecondary: Colors.amber,
+      inactiveColorPrimary: Colors.black,
+    ),
+  ];
+}
+
+@override
+List<Widget> _buildScreens() {
+  return [
+    HomeView(),
+    Subjects(),
+    HomeView(),
+    Attendance(),
+    About(),
+  ];
 }
 
 class HomeView extends StatefulWidget {
@@ -104,7 +170,6 @@ class _HomeViewState extends State<HomeView> {
               icon: Icons.roller_shades_closed_rounded,
               label: 'Attendance Details',
             ),
-            SidebarXItem(icon: Icons.search, label: 'Search'),
           ],
           theme: SidebarXTheme(
             margin: const EdgeInsets.all(10),
@@ -129,10 +194,13 @@ class _HomeViewState extends State<HomeView> {
               onTap: () async {
                 final logoutValue = await LoginService().logout();
                 if (logoutValue == true) {
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (_) => LoginScreen(),
+                      builder: (BuildContext context) {
+                        return const LoginScreen();
+                      },
                     ),
+                    (_) => false,
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -144,10 +212,13 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   );
 
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (_) => LoginScreen(),
+                      builder: (BuildContext context) {
+                        return const LoginScreen();
+                      },
                     ),
+                    (_) => false,
                   );
                 }
               },
@@ -305,4 +376,439 @@ class Category {
 
   final String image;
   final String name;
+}
+
+class Subjects extends StatefulWidget {
+  const Subjects({super.key});
+
+  @override
+  State<Subjects> createState() => _SubjectsState();
+}
+
+class _SubjectsState extends State<Subjects> {
+  List<Album> display = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    getcourses();
+  }
+
+  getdescription(subject_id) async {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (c, a1, a2) => Content_view(
+                  subject_id: subject_id,
+                )));
+  }
+
+  getcourses() async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    var api_token = storage.getString('TOKEN');
+
+    var cat = await CategoryApi.get_cat(api_token);
+
+    setState(() {
+      display = cat;
+    });
+  }
+
+  final List<Category> categories = [
+    Category(image: "assets/images/teacher.jpg", name: "Flutter"),
+    Category(image: "assets/images/teacher.jpg", name: "EAD"),
+    Category(image: "assets/images/teacher.jpg", name: "DBA"),
+    Category(image: "assets/images/teacher.jpg", name: "SNA"),
+    Category(image: "assets/images/teacher.jpg", name: "IOT"),
+  ];
+
+  final List<Color> kMixedColors = [
+    Color(0xff71A5D7),
+    Color(0xff72CCD4),
+    Color(0xffFBAB57),
+    Color(0xffF8B993),
+    Color(0xff962D17),
+    Color(0xffc657fb),
+    Color(0xfffb8457),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          Image.asset(
+            "assets/images/uos.jpg", // replace with your image URL
+            fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.height / 3,
+            width: double.infinity,
+          ),
+          Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height / 20.5),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Image.asset(
+                    "assets/images/logo.jpg", // replace with your logo asset path
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 250, 250, 250),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(30),
+                              topLeft: Radius.circular(30))),
+                      child: Column(children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Text(
+                            'Subjects ',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.amber),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ScaledList(
+                          selectedCardHeightRatio: 0.3,
+                          unSelectedCardHeightRatio: 0.2,
+                          itemCount: display.length,
+                          itemColor: (index) {
+                            return kMixedColors[index % kMixedColors.length];
+                          },
+                          itemBuilder: (index, selectedIndex) {
+                            final category = categories[index];
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    getdescription(display[index].id);
+                                  },
+                                  child: Container(
+                                    height: selectedIndex == index ? 100 : 80,
+                                    child: Image.asset(category.image),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  '${display[index].name}',
+                                  // "name",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          selectedIndex == index ? 20 : 12),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ])))
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Attendance extends StatefulWidget {
+  const Attendance({super.key});
+
+  @override
+  State<Attendance> createState() => _AttendanceState();
+}
+
+class _AttendanceState extends State<Attendance> {
+  List<Album> display = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    getcourses();
+  }
+
+  getcourses() async {
+    SharedPreferences storage = await SharedPreferences.getInstance();
+    var api_token = storage.getString('TOKEN');
+
+    var cat = await CategoryApi.get_cat(api_token);
+
+    setState(() {
+      display = cat;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          Image.asset(
+            "assets/images/uos.jpg", // replace with your image URL
+            fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.height / 3,
+            width: double.infinity,
+          ),
+          Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height / 20.5),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Image.asset(
+                    "assets/images/logo.jpg", // replace with your logo asset path
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 250, 250, 250),
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(30),
+                              topLeft: Radius.circular(30))),
+                      child: Column(children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Text(
+                            'Subjects ',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.amber),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: display.length,
+                              itemBuilder: (context, index) => Container(
+                                    height: 80,
+                                    width: 350,
+                                    padding: EdgeInsets.all(5),
+                                    child: Card(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      child: ListTile(
+                                        onTap: () {},
+                                        trailing: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      attendant_report_screen()),
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 80,
+                                            height: 40.0,
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  // gradient starts from left
+                                                  begin: Alignment.centerLeft,
+                                                  // gradient ends at right
+                                                  end: Alignment.centerRight,
+                                                  // set all your colors
+                                                  colors: [
+                                                    Colors.amber,
+                                                    Colors.amber,
+                                                    Colors.amber,
+                                                    Colors.amber,
+                                                    Colors.amber,
+                                                    Colors.amber,
+                                                    Colors.amber,
+                                                    Colors.amber,
+                                                    Colors.amber,
+                                                  ]),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0)),
+                                            ),
+                                            child: Center(
+                                                child: Text(
+                                              'View Attend',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 14, 14, 14),
+                                                  fontSize: 9.0),
+                                            )),
+                                          ),
+                                        ),
+                                        title: Text(
+                                          '${display[index].name}',
+                                          style: TextStyle(
+                                              color:
+                                                  Color.fromARGB(255, 8, 8, 8),
+                                              fontSize: 15),
+                                        ),
+                                        leading: Container(
+                                          padding: EdgeInsets.only(top: 10),
+                                          child: CircleAvatar(
+                                            radius: 30,
+                                            backgroundImage: AssetImage(
+                                                'assets/images/teacher.jpg'),
+                                          ),
+                                        ),
+                                      ),
+                                      elevation: 7,
+                                      shadowColor:
+                                          Color.fromARGB(255, 63, 63, 63),
+                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                    ),
+                                  )),
+                        ),
+                      ])))
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class About extends StatefulWidget {
+  const About({super.key});
+
+  @override
+  State<About> createState() => _AboutState();
+}
+
+class _AboutState extends State<About> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 213,
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                margin: EdgeInsets.only(top: 0),
+              ),
+              Column(children: [
+                SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Row(
+                    children: [
+                      Text('Welcome'),
+                      SizedBox(
+                        width: 270,
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(25, 5, 0, 0),
+                      child: Text(
+                        'University Of Sargodha',
+                        style: TextStyle(
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                Container(
+                  width: 280,
+                  height: 59,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.0824137),
+                        blurRadius: 15,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 65,
+                        ),
+                        Image.asset("assets/images/logo.jpg"),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "CS & IT",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ]),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 5),
+            child: Text(
+              'About UOS(CS & IT)',
+              style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Text(
+                " To provide students with a healthy learning experience based on critical thinking, innovation and leadership skills To ensure a collaborative work environment for faculty and staff to achieve professional excellence and institutional growth To contribute to knowledge economy and social transformation through advanced studies and research"),
+          )
+        ],
+      ),
+    );
+  }
 }

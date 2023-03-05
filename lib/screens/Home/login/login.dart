@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (BuildContext context) {
         // Start a timer to dismiss the dialog after 1 minute
-        Timer timer = Timer(Duration(seconds: 5), () {
+        Timer timer = Timer(Duration(seconds: 8), () {
           Navigator.of(context, rootNavigator: true).pop();
           Fluttertoast.showToast(
               toastLength: Toast.LENGTH_LONG,
@@ -258,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (_) => HomeView(user: user),
+                                  builder: (_) => Home_screen(user: user),
                                 ),
                               );
                             }

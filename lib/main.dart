@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
               return Splash_Screen();
             default:
               if (snapshot.data != null) {
-                return HomeView(user: snapshot.data);
+                return Home_screen(user: snapshot.data);
               } else {
                 return Splash_Screen();
               }

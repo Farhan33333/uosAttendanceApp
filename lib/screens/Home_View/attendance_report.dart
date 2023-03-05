@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scaled_list/scaled_list.dart';
+import 'package:uosapp/screens/Home_View/Home_view.dart';
 import 'package:uosapp/screens/Home_View/attendance_details.dart';
 
 class attendant_report_screen extends StatefulWidget {
@@ -18,10 +19,8 @@ class _attendant_report_screenState extends State<attendant_report_screen> {
         backgroundColor: Colors.amber,
         leading: GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const attendance_Screen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeView()));
             },
             child: Icon(
               Icons.arrow_back,
