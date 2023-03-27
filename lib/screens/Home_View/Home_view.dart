@@ -803,9 +803,11 @@ class _AboutState extends State<About> {
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(18.0),
             child: const Text(
-                " To provide students with a healthy learning experience based on critical thinking, innovation and leadership skills To ensure a collaborative work environment for faculty and staff to achieve professional excellence and institutional growth To contribute to knowledge economy and social transformation through advanced studies and research"),
+              " To provide students with a healthy learning experience based on critical thinking, innovation and leadership skills To ensure a collaborative work environment for faculty and staff to achieve professional excellence and institutional growth To contribute to knowledge economy and social transformation through advanced studies and research",
+              textAlign: TextAlign.justify,
+            ),
           )
         ],
       ),
