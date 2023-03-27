@@ -12,7 +12,7 @@ import 'package:uosapp/api_Handler/Api_LoginInterface.dart';
 class LoginService extends ILogin {
   @override
   Future<UserModel> login(String email, String password) async {
-    final api = Uri.parse('http://tritec.store/uosattendence/public/api/login');
+    final api = Uri.parse('https://attendance.klickwash.net/api/login');
     final data = {"email": email, "password": password};
 
     http.Response response = await http.post(api, body: data);

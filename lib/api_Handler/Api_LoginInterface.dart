@@ -11,7 +11,7 @@ class ILogin {
   login(String email, String password) async {
     log(email);
     log(password);
-    final api = 'http://tritec.store/uosattendence/public/api//login';
+    final api = 'https://attendance.klickwash.net/api/login';
     final data = {"email": email, "password": password};
     final dio = Dio();
     Response response;

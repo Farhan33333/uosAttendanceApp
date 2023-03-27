@@ -24,7 +24,7 @@ class _Content_viewState extends State<Content_view> {
 
   getdescription(file) async {
     Navigator.push(context,
-        PageRouteBuilder(pageBuilder: (c, a1, a2) => PdfScreen(file: file)));
+        PageRouteBuilder(pageBuilder: (c, a1, a2) => pdfViewer(file: file)));
   }
 
   final int subject_id;

@@ -8,7 +8,7 @@ import 'package:uosapp/api_Handler/Models/detailmodel.dart';
 
 class CategoryApi {
   static get_cat(apiToken) async {
-    var Url = 'http://tritec.store/uosattendence/public/api/subjects';
+    var Url = 'https://attendance.klickwash.net/api/subjects';
     var data = {'api_token': apiToken};
     var response = await Api.execute(url: Url, data: data);
     log(response.toString());
@@ -27,7 +27,7 @@ class CategoryApi {
 
 class Content_details {
   static postApi(apiToken, s_id) async {
-    var Url = 'http://tritec.store/uosattendence/public/api/content';
+    var Url = 'https://attendance.klickwash.net/api/content';
     var data = {'api_token': apiToken, "subject_id": s_id.toString()};
     var response = await Api.execute(url: Url, data: data);
     // final dio = Dio();

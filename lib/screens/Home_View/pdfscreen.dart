@@ -50,7 +50,7 @@ class _PdfScreenState extends State<PdfScreen> {
     if (status.isGranted) {
       String dirloc = "";
       if (Platform.isAndroid) {
-        dirloc = "/sdcard/download/";
+        dirloc = "/sd/";
       } else {
         dirloc = (await getApplicationDocumentsDirectory()).path;
       }
@@ -94,22 +94,6 @@ class _PdfScreenState extends State<PdfScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Content EduCourse'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.bookmark,
-              color: Colors.white,
-              semanticLabel: 'Bookmark',
-            ),
-            onPressed: () {
-              log('bookmark');
-              _pdfViewerKey.currentState?.openBookmarkView();
-            },
-          ),
-        ],
-      ),
       body: Center(
           child: downloading
               ? Container(
