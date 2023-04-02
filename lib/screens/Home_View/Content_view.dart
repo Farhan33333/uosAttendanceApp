@@ -65,62 +65,61 @@ class _Content_viewState extends State<Content_view> {
         ),
         body: ListView.builder(
           itemCount: display.length,
-          itemBuilder: (context, index) => SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: 35,
+          itemBuilder: (context, index) => Column(
+            children: [
+              Container(
+                height: 35,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 140),
+                child: Text(
+                  'Éducourse',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 140),
-                  child: Text(
-                    'Éducourse',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+              ),
+              Container(
+                height: 200,
+                width: 400,
+                // padding: EdgeInsets.only(left: 20),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(150, 50),
+                    maximumSize: const Size(150, 50),
+                    // minimumSize: Size.fromWidth(20),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30)),
+                        side: BorderSide(color: Color.fromARGB(255, 3, 3, 3))),
+                    primary: Color.fromARGB(255, 6, 6, 6),
                   ),
-                ),
-                Container(
-                  height: 200,
-                  width: 400,
-                  // padding: EdgeInsets.only(left: 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(150, 50),
-                      maximumSize: const Size(150, 50),
-                      // minimumSize: Size.fromWidth(20),
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30)),
-                          side:
-                              BorderSide(color: Color.fromARGB(255, 3, 3, 3))),
-                      primary: Color.fromARGB(255, 6, 6, 6),
-                    ),
-                    child: Image.asset(
-                      "assets/images/teacher.jpg",
-                    ),
-                    onPressed: () async {},
+                  child: Image.asset(
+                    "assets/images/teacher.jpg",
                   ),
+                  onPressed: () async {},
                 ),
-                SizedBox(
-                  height: 20,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 190),
+                child: Text(
+                  'CourseDetails:',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 190),
-                  child: Text(
-                    'CourseDetails:',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                  ),
+              ),
+              Container(
+                padding: EdgeInsets.only(right: 8),
+                child: Text(
+                  '${display[index].title}',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
-                Container(
-                  padding: EdgeInsets.only(right: 8),
-                  child: Text(
-                    '${display[index].title}',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                GridView.count(
-                  crossAxisCount: 3,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Row(
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -134,8 +133,8 @@ class _Content_viewState extends State<Content_view> {
                                 offset: Offset(2.0, 5.0),
                                 color: Colors.grey)
                           ]),
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
+                      height: 100,
+                      width: 130,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -166,8 +165,8 @@ class _Content_viewState extends State<Content_view> {
                                   offset: Offset(2.0, 5.0),
                                   color: Colors.grey)
                             ]),
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
+                        height: 100,
+                        width: 130,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -199,8 +198,8 @@ class _Content_viewState extends State<Content_view> {
                                   offset: Offset(2.0, 5.0),
                                   color: Colors.grey)
                             ]),
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
+                        height: 100,
+                        width: 130,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -226,57 +225,53 @@ class _Content_viewState extends State<Content_view> {
                     //   ),
                     // ),
                   ],
-                  padding: EdgeInsets.all(10),
-                  shrinkWrap: true,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 290),
-                  child: Text(
-                    'Description:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 290),
+                child: Text(
+                  'Description:',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Card(
-                  elevation: 1,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  color: Color.fromARGB(255, 230, 227, 227),
-                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                  child: Stack(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 10, right: 10, top: 5, bottom: 20),
-                      child: Text(
-                        "Programming refers to the process of designing, writing, testing, debugging, and maintaining the source code of computer software. It involves using a programming language to create instructions that a computer can understand and execute. These instructions allow the computer to perform tasks, store and manipulate data, and interact with users. Some popular programming languages include Python, Java, C++, JavaScript, and many more.",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 133, 133, 133)),
-                      ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Card(
+                elevation: 1,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                color: Color.fromARGB(255, 230, 227, 227),
+                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: Stack(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 5, bottom: 20),
+                    child: Text(
+                      "Programming refers to the process of designing, writing, testing, debugging, and maintaining the source code of computer software. It involves using a programming language to create instructions that a computer can understand and execute. These instructions allow the computer to perform tasks, store and manipulate data, and interact with users. Some popular programming languages include Python, Java, C++, JavaScript, and many more.",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 133, 133, 133)),
                     ),
-                    Positioned(
-                      bottom: 4,
-                      right: 10,
-                      child: Row(
-                        children: [
-                          Text("Sub_name",
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Color.fromARGB(255, 179, 177, 177))),
-                          SizedBox(
-                            width: 5,
-                          ),
-                        ],
-                      ),
-                    )
-                  ]),
-                ),
-              ],
-            ),
+                  ),
+                  Positioned(
+                    bottom: 4,
+                    right: 10,
+                    child: Row(
+                      children: [
+                        Text("Sub_name",
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Color.fromARGB(255, 179, 177, 177))),
+                        SizedBox(
+                          width: 5,
+                        ),
+                      ],
+                    ),
+                  )
+                ]),
+              ),
+            ],
           ),
         ),
       ),

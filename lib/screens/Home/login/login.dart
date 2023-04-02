@@ -28,6 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   bool _obscureText = true;
+  bool _isHidden = true;
+
   showLoaderDialog(BuildContext context) {
     AlertDialog alert = AlertDialog(
       content: new Row(
@@ -186,6 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Form(
                         key: formkey1,
                         child: TextFormField(
+                          obscureText: _isHidden,
                           validator: (value) {
                             RegExp regex = RegExp(
                                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
@@ -205,6 +208,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           style:
                               TextStyle(color: Color.fromARGB(255, 11, 11, 11)),
                           decoration: InputDecoration(
+                              suffix: InkWell(
+                                onTap: _togglePasswordView,
+                                child: Icon(
+                                  _isHidden
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                ),
+                              ),
                               border: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.yellow),
                               ),
@@ -329,5 +340,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       );
     }));
+  }
+
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 }
