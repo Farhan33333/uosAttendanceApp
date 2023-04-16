@@ -7,6 +7,7 @@ import 'package:uosapp/main.dart';
 import 'package:uosapp/screens/Home_View/Home_view.dart';
 import 'package:uosapp/screens/Home_View/pdfscreen.dart';
 import 'package:uosapp/screens/Home_View/pdfviewer.dart';
+import 'package:uosapp/screens/Home_View/youtube_link.dart';
 
 import '../../api_Handler/Models/contentmodel.dart';
 import '../../api_Handler/Models/detailmodel.dart';
@@ -179,10 +180,10 @@ class _Content_viewState extends State<Content_view> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        //  Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: (context) => youtube_player(youtube:youtube)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => youtube_player()));
                       },
                       child: Container(
                         decoration: BoxDecoration(

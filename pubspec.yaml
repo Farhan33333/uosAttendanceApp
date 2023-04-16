@@ -51,6 +51,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.4.51
   persistent_bottom_nav_bar: ^5.0.2
   get: ^4.6.5
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_test:
