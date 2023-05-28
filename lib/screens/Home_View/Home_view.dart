@@ -32,17 +32,21 @@ class _Home_screenState extends State<Home_screen> {
     PersistentTabController _controller;
     _controller = PersistentTabController(initialIndex: 0);
 
-    return PersistentTabView(
-      context,
-      // controller: _controller,
-      screens: _buildScreens(),
-      items: _navBarItem(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+          body: PersistentTabView(
+        context,
+        // controller: _controller,
+        screens: _buildScreens(),
+        items: _navBarItem(),
 
-      navBarStyle: NavBarStyle.style16,
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(1.0),
-        colorBehindNavBar: Colors.white,
-      ),
+        navBarStyle: NavBarStyle.style16,
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.circular(1.0),
+          colorBehindNavBar: Colors.white,
+        ),
+      )),
     );
   }
 }
@@ -69,7 +73,7 @@ List<PersistentBottomNavBarItem> _navBarItem() {
     ),
     PersistentBottomNavBarItem(
       icon: Icon(Icons.list_alt),
-      title: ('Attendance'),
+      title: ('Notifications'),
       activeColorSecondary: Colors.amber,
       inactiveColorPrimary: Colors.black,
     ),
@@ -164,11 +168,11 @@ class _HomeViewState extends State<HomeView> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => attendance_Screen()),
+                  MaterialPageRoute(builder: (context) => Attendance()),
                 );
               },
               icon: Icons.roller_shades_closed_rounded,
-              label: 'Attendance Details',
+              label: 'Announcements',
             ),
           ],
           theme: SidebarXTheme(
@@ -323,9 +327,9 @@ class _HomeViewState extends State<HomeView> {
               ),
               Container(
                   child: Text(
-                    "A style icon gets some love from one of today's top "
-                    "trendsetters. Pharrell Williams puts his creative spin on these "
-                    "shoes, which have all the clean, classicdetails of the beloved Stan Smith.",
+                    "A major public sector university of Pakistan offering modern teaching"
+                    "and research facilities, including well-equipped classrooms, laboratories"
+                    "and a vast collection of library material, with online access to books and journals.",
                     textAlign: TextAlign.justify,
                     style: TextStyle(height: 1.5, color: Color(0xFF6F8398)),
                   ),
@@ -459,30 +463,39 @@ class _SubjectsState extends State<Subjects> {
                 ),
               ),
               Expanded(
-                  child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 250, 250, 250),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(30),
-                              topLeft: Radius.circular(30))),
-                      child: Column(children: [
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 5),
-                          child: Text(
-                            'Subjects ',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.amber),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 250, 250, 250),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 30),
+                      Container(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(
+                          'Subjects',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.amber,
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                      ),
+                      SizedBox(height: 20),
+                      if (display.length <= 0)
+                        Text(
+                          "There are no subjects entered for this course.",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        )
+                      else
                         ScaledList(
                           selectedCardHeightRatio: 0.3,
                           unSelectedCardHeightRatio: 0.2,
@@ -507,17 +520,19 @@ class _SubjectsState extends State<Subjects> {
                                 SizedBox(height: 10),
                                 Text(
                                   '${display[index].name}',
-                                  // "name",
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize:
-                                          selectedIndex == index ? 20 : 12),
-                                )
+                                    color: Colors.white,
+                                    fontSize: selectedIndex == index ? 20 : 12,
+                                  ),
+                                ),
                               ],
                             );
                           },
                         ),
-                      ])))
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ],
@@ -553,6 +568,14 @@ class _AttendanceState extends State<Attendance> {
       display = cat;
     });
   }
+
+  final List<String> announcements = [
+    'Announcement of the day 1',
+    'Announcement of the day 2',
+    'Announcement of the day 3',
+    'Announcement of the day 4',
+    'Announcement of the day 5',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -591,100 +614,144 @@ class _AttendanceState extends State<Attendance> {
                         SizedBox(
                           height: 30,
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 5),
-                          child: Text(
-                            'Subjects ',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.amber),
-                          ),
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.only(top: 5),
+                        //   child: Text(
+                        //     'Announcements ',
+                        //     style: TextStyle(
+                        //         fontSize: 20,
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.amber),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 20,
                         ),
+                        Stack(
+                          children: <Widget>[
+                            // Stroked text as border.
+                            Text(
+                              'Announcements!',
+                              style: TextStyle(
+                                fontSize: 40,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 6
+                                  ..color = Colors.blue[700]!,
+                              ),
+                            ),
+                            // Solid text as fill.
+                            Text(
+                              'Announcements!',
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: Colors.grey[300],
+                              ),
+                            ),
+                          ],
+                        ),
                         Expanded(
                           child: ListView.builder(
-                              itemCount: display.length,
-                              itemBuilder: (context, index) => Container(
-                                    height: 80,
-                                    width: 350,
-                                    padding: EdgeInsets.all(5),
-                                    child: Card(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      child: ListTile(
-                                        onTap: () {},
-                                        trailing: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      attendant_report_screen()),
-                                            );
-                                          },
-                                          child: Container(
-                                            width: 80,
-                                            height: 40.0,
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                  // gradient starts from left
-                                                  begin: Alignment.centerLeft,
-                                                  // gradient ends at right
-                                                  end: Alignment.centerRight,
-                                                  // set all your colors
-                                                  colors: [
-                                                    Colors.amber,
-                                                    Colors.amber,
-                                                    Colors.amber,
-                                                    Colors.amber,
-                                                    Colors.amber,
-                                                    Colors.amber,
-                                                    Colors.amber,
-                                                    Colors.amber,
-                                                    Colors.amber,
-                                                  ]),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.0)),
-                                            ),
-                                            child: Center(
-                                                child: Text(
-                                              'View Attend',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color.fromARGB(
-                                                      255, 14, 14, 14),
-                                                  fontSize: 9.0),
-                                            )),
-                                          ),
-                                        ),
-                                        title: Text(
-                                          '${display[index].name}',
-                                          style: TextStyle(
-                                              color:
-                                                  Color.fromARGB(255, 8, 8, 8),
-                                              fontSize: 15),
-                                        ),
-                                        leading: Container(
-                                          padding: EdgeInsets.only(top: 10),
-                                          child: CircleAvatar(
-                                            radius: 30,
-                                            backgroundImage: AssetImage(
-                                                'assets/images/teacher.jpg'),
-                                          ),
-                                        ),
-                                      ),
-                                      elevation: 7,
-                                      shadowColor:
-                                          Color.fromARGB(255, 63, 63, 63),
-                                      margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
+                            itemCount: announcements.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 4,
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 16),
+                                child: ListTile(
+                                  title: Text(
+                                    announcements[index],
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                  )),
-                        ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                        // Expanded(
+                        //   child: ListView.builder(
+                        //       itemCount: display.length,
+                        //       itemBuilder: (context, index) => Container(
+                        //             height: 80,
+                        //             width: 350,
+                        //             padding: EdgeInsets.all(5),
+                        //             child: Card(
+                        //               color: Color.fromARGB(255, 255, 255, 255),
+                        //               child: ListTile(
+                        //                 onTap: () {},
+                        //                 trailing: GestureDetector(
+                        //                   onTap: () {
+                        //                     Navigator.push(
+                        //                       context,
+                        //                       MaterialPageRoute(
+                        //                           builder: (context) =>
+                        //                               attendant_report_screen()),
+                        //                     );
+                        //                   },
+                        //                   child: Container(
+                        //                     width: 80,
+                        //                     height: 40.0,
+                        //                     decoration: BoxDecoration(
+                        //                       gradient: LinearGradient(
+                        //                           // gradient starts from left
+                        //                           begin: Alignment.centerLeft,
+                        //                           // gradient ends at right
+                        //                           end: Alignment.centerRight,
+                        //                           // set all your colors
+                        //                           colors: [
+                        //                             Colors.amber,
+                        //                             Colors.amber,
+                        //                             Colors.amber,
+                        //                             Colors.amber,
+                        //                             Colors.amber,
+                        //                             Colors.amber,
+                        //                             Colors.amber,
+                        //                             Colors.amber,
+                        //                             Colors.amber,
+                        //                           ]),
+                        //                       borderRadius: BorderRadius.all(
+                        //                           Radius.circular(10.0)),
+                        //                     ),
+                        //                     child: Center(
+                        //                         child: Text(
+                        //                       'View Attend',
+                        //                       style: TextStyle(
+                        //                           fontWeight: FontWeight.bold,
+                        //                           color: Color.fromARGB(
+                        //                               255, 14, 14, 14),
+                        //                           fontSize: 9.0),
+                        //                     )),
+                        //                   ),
+                        //                 ),
+                        //                 title: Text(
+                        //                   '${display[index].name}',
+                        //                   style: TextStyle(
+                        //                       color:
+                        //                           Color.fromARGB(255, 8, 8, 8),
+                        //                       fontSize: 15),
+                        //                 ),
+                        //                 leading: Container(
+                        //                   padding: EdgeInsets.only(top: 10),
+                        //                   child: CircleAvatar(
+                        //                     radius: 30,
+                        //                     backgroundImage: AssetImage(
+                        //                         'assets/images/teacher.jpg'),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //               elevation: 7,
+                        //               shadowColor:
+                        //                   Color.fromARGB(255, 63, 63, 63),
+                        //               margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                        //               shape: RoundedRectangleBorder(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(8)),
+                        //             ),
+                        //           )),
+                        // ),
                       ])))
             ],
           ),

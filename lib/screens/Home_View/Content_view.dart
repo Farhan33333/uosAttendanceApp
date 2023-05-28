@@ -28,6 +28,13 @@ class _Content_viewState extends State<Content_view> {
         PageRouteBuilder(pageBuilder: (c, a1, a2) => pdfViewer(file: file)));
   }
 
+  getlinkvideo(youtube) async {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (c, a1, a2) => youtube_player(youtube: youtube)));
+  }
+
   final int subject_id;
   List<Content> display = [];
   @override
@@ -183,7 +190,8 @@ class _Content_viewState extends State<Content_view> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => youtube_player()));
+                                builder: (context) =>
+                                    getlinkvideo('${display[index].link}')));
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -249,7 +257,7 @@ class _Content_viewState extends State<Content_view> {
                     padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 5, bottom: 20),
                     child: Text(
-                      "Programming refers to the process of designing, writing, testing, debugging, and maintaining the source code of computer software. It involves using a programming language to create instructions that a computer can understand and execute. These instructions allow the computer to perform tasks, store and manipulate data, and interact with users. Some popular programming languages include Python, Java, C++, JavaScript, and many more.",
+                      "'${display[index].description}'",
                       style: TextStyle(
                           fontSize: 16,
                           color: Color.fromARGB(255, 133, 133, 133)),
@@ -260,7 +268,7 @@ class _Content_viewState extends State<Content_view> {
                     right: 10,
                     child: Row(
                       children: [
-                        Text("Sub_name",
+                        Text("'${display[index].title}'",
                             style: TextStyle(
                                 fontSize: 13,
                                 color: Color.fromARGB(255, 179, 177, 177))),

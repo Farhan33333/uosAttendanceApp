@@ -4,26 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class youtube_player extends StatefulWidget {
-  youtube_player({Key? key}) : super(key: key);
+  String youtube;
+  youtube_player({Key? key, required this.youtube}) : super(key: key);
 
   @override
-  State<youtube_player> createState() => _youtube_playerState();
+  State<youtube_player> createState() => _youtube_playerState(this.youtube);
 }
 
 class _youtube_playerState extends State<youtube_player> {
-  _youtube_playerState();
-
+  _youtube_playerState(this.youtube);
+  final String youtube;
   late YoutubePlayerController controller;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    const url = 'https://www.youtube.com/watch?v=GQyWIur03aw';
+    log(youtube);
 
     controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(url)!,
+        initialVideoId: YoutubePlayer.convertUrlToId(youtube)!,
         flags:
             const YoutubePlayerFlags(mute: false, loop: false, autoPlay: true));
   }
@@ -46,6 +46,9 @@ class _youtube_playerState extends State<youtube_player> {
   Widget build(BuildContext context) => YoutubePlayerBuilder(
       player: YoutubePlayer(controller: controller),
       builder: (context, player) => Scaffold(
+            appBar: AppBar(
+              title: const Text('Content EduCourse'),
+            ),
             body: ListView(
               children: [
                 player,
