@@ -7,7 +7,6 @@ import 'package:scaled_list/scaled_list.dart';
 import 'package:uosapp/api_Handler/Api_Content.dart';
 import 'package:uosapp/screens/Home_Screens/about_screen.dart';
 import 'package:uosapp/screens/Home_Screens/attendance_details.dart';
-import 'package:uosapp/screens/Home_Screens/notifications_screen.dart';
 import 'package:uosapp/screens/Home_Screens/subjects_screen.dart';
 import 'package:uosapp/screens/Intro_Screens/login/login.dart';
 import 'package:uosapp/screens/Home_Screens/Content_view.dart';
