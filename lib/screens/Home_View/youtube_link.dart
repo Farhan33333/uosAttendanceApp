@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:uosapp/screens/Home_View/Content_view.dart';
+import 'package:uosapp/screens/Home_View/Home_view.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class youtube_player extends StatefulWidget {
@@ -47,7 +49,16 @@ class _youtube_playerState extends State<youtube_player> {
       player: YoutubePlayer(controller: controller),
       builder: (context, player) => Scaffold(
             appBar: AppBar(
-              title: const Text('Content EduCourse'),
+              backgroundColor: Colors.amber,
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context); // Navigate back to previous screen
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+              ),
             ),
             body: ListView(
               children: [

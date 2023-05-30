@@ -20,81 +20,91 @@ import '../../static/input_field.dart';
 import '../../static/large_button.dart';
 
 class Home_screen extends StatefulWidget {
-  const Home_screen({super.key, Object? user});
+  const Home_screen({Key? key, Object? user}) : super(key: key);
 
   @override
   State<Home_screen> createState() => _Home_screenState();
 }
 
 class _Home_screenState extends State<Home_screen> {
+  PersistentTabController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = PersistentTabController(initialIndex: 0);
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose(); // Dispose the PersistentTabController
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    PersistentTabController _controller;
-    _controller = PersistentTabController(initialIndex: 0);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: PersistentTabView(
-        context,
-        // controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarItem(),
-
-        navBarStyle: NavBarStyle.style16,
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(1.0),
-          colorBehindNavBar: Colors.white,
+        body: PersistentTabView(
+          context,
+          controller: _controller,
+          screens: _buildScreens(),
+          items: _navBarItem(),
+          navBarStyle: NavBarStyle.style16,
+          decoration: NavBarDecoration(
+            borderRadius: BorderRadius.circular(1.0),
+            colorBehindNavBar: Colors.white,
+          ),
         ),
-      )),
+      ),
     );
   }
-}
 
-List<PersistentBottomNavBarItem> _navBarItem() {
-  return [
-    PersistentBottomNavBarItem(
-      icon: Icon(Icons.home),
-      title: ('Home'),
-      activeColorSecondary: Colors.amber,
-      inactiveColorPrimary: Colors.black,
-    ),
-    PersistentBottomNavBarItem(
-      icon: Icon(Icons.chat),
-      title: ('Subjects'),
-      activeColorSecondary: Colors.amber,
-      inactiveColorPrimary: Colors.black,
-    ),
-    PersistentBottomNavBarItem(
-      icon: Icon(Icons.diamond),
-      activeColorPrimary: Colors.amber,
-      activeColorSecondary: Colors.white,
-      inactiveColorPrimary: Colors.black,
-    ),
-    PersistentBottomNavBarItem(
-      icon: Icon(Icons.list_alt),
-      title: ('Notifications'),
-      activeColorSecondary: Colors.amber,
-      inactiveColorPrimary: Colors.black,
-    ),
-    PersistentBottomNavBarItem(
-      icon: Icon(Icons.settings),
-      title: ('About'),
-      activeColorSecondary: Colors.amber,
-      inactiveColorPrimary: Colors.black,
-    ),
-  ];
-}
+  List<PersistentBottomNavBarItem> _navBarItem() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.home),
+        title: 'Home',
+        activeColorSecondary: Colors.amber,
+        inactiveColorPrimary: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.chat),
+        title: 'Subjects',
+        activeColorSecondary: Colors.amber,
+        inactiveColorPrimary: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.diamond),
+        activeColorPrimary: Colors.amber,
+        activeColorSecondary: Colors.white,
+        inactiveColorPrimary: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.list_alt),
+        title: 'Notifications',
+        activeColorSecondary: Colors.amber,
+        inactiveColorPrimary: Colors.black,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.settings),
+        title: 'About',
+        activeColorSecondary: Colors.amber,
+        inactiveColorPrimary: Colors.black,
+      ),
+    ];
+  }
 
-@override
-List<Widget> _buildScreens() {
-  return [
-    HomeView(),
-    Subjects(),
-    HomeView(),
-    Attendance(),
-    About(),
-  ];
+  List<Widget> _buildScreens() {
+    return [
+      HomeView(),
+      Subjects(),
+      HomeView(),
+      Attendance(),
+      About(),
+    ];
+  }
 }
 
 class HomeView extends StatefulWidget {
