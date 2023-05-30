@@ -196,13 +196,7 @@ class _Content_viewState extends State<Content_view> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  getlinkvideo('${display[index].link}'),
-                            ),
-                          );
+                          getlinkvideo('${display[index].link}');
                         },
                         child: Container(
                           decoration: BoxDecoration(
