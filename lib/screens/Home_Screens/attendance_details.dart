@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uosapp/api_Handler/Api_Attendance.dart';
 import 'package:uosapp/api_Handler/Models/attendnacemodel.dart';
 import 'package:uosapp/screens/Home_Screens/Home_view.dart';
-import 'package:uosapp/screens/Home_Screens/attendance_report.dart';
 
 import '../../api_Handler/Api_Content.dart';
 import '../../api_Handler/Models/contentmodel.dart';
