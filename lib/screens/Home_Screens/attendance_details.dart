@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uosapp/api_Handler/Api_Attendance.dart';
+import 'package:uosapp/api_Handler/Models/attendnacemodel.dart';
 import 'package:uosapp/screens/Home_Screens/Home_view.dart';
 import 'package:uosapp/screens/Home_Screens/attendance_report.dart';
 
@@ -14,23 +17,23 @@ class attendance_Screen extends StatefulWidget {
 }
 
 class _attendance_ScreenState extends State<attendance_Screen> {
-  List<Album> display = [];
+  List<Attendancemodel> display = [];
 
   @override
   void initState() {
     super.initState();
 
-    getcourses();
+    getattendance();
   }
 
-  getcourses() async {
+  getattendance() async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     var api_token = storage.getString('TOKEN');
 
-    var cat = await CategoryApi.get_cat(api_token);
+    var attend = await AttendanceApi.get_attend(api_token);
 
     setState(() {
-      display = cat;
+      display = attend;
     });
   }
 
@@ -51,113 +54,96 @@ class _attendance_ScreenState extends State<attendance_Screen> {
       ),
       body: Column(
         children: [
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 8),
-            child: Text('Attendance Details',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-          ),
           SizedBox(
-            height: 30,
+            height: 20,
           ),
-          const Text(
-            'Subjects',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            width: 300,
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Enter Subject You Want',
-                contentPadding: const EdgeInsets.all(15),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+          Stack(
+            children: <Widget>[
+              // Stroked text as border.
+              Text(
+                'Attendance!',
+                style: TextStyle(
+                  fontSize: 40,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 6
+                    ..color = Colors.blue[700]!,
+                ),
               ),
-              onChanged: (value) {
-                // do something
-              },
-            ),
+              // Solid text as fill.
+              Text(
+                'Attendance!',
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.grey[300],
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: ListView.builder(
-                itemCount: display.length,
-                itemBuilder: (context, index) => Container(
-                      height: 80,
-                      width: 350,
-                      padding: EdgeInsets.all(5),
-                      child: Card(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        child: ListTile(
-                          onTap: () {},
-                          trailing: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        attendant_report_screen()),
-                              );
-                            },
-                            child: Container(
-                              width: 80,
-                              height: 40.0,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    // gradient starts from left
-                                    begin: Alignment.centerLeft,
-                                    // gradient ends at right
-                                    end: Alignment.centerRight,
-                                    // set all your colors
-                                    colors: [
-                                      Colors.amber,
-                                      Colors.amber,
-                                      Colors.amber,
-                                      Colors.amber,
-                                      Colors.amber,
-                                      Colors.amber,
-                                      Colors.amber,
-                                      Colors.amber,
-                                      Colors.amber,
-                                    ]),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
+              itemCount: display.length,
+              itemBuilder: (context, index) => Container(
+                height: 120,
+                width: double.infinity,
+                padding: EdgeInsets.all(10),
+                child: Card(
+                  color: Colors.white,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Subject Name:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
-                              child: Center(
-                                  child: Text(
-                                'View Attend',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 14, 14, 14),
-                                    fontSize: 9.0),
-                              )),
                             ),
-                          ),
-                          title: Text(
-                            '${display[index].name}',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 8, 8, 8),
-                                fontSize: 15),
-                          ),
-                          leading: Container(
-                            padding: EdgeInsets.only(top: 10),
-                            child: CircleAvatar(
-                              radius: 30,
-                              backgroundImage:
-                                  AssetImage('assets/images/teacher.jpg'),
+                            SizedBox(height: 5),
+                            Text(
+                              display[index].subject_name,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                        elevation: 7,
-                        shadowColor: Color.fromARGB(255, 63, 63, 63),
-                        margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                      ),
-                    )),
+                        SizedBox(width: 70),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Date-Time:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              DateFormat('yyyy-MM-dd – kk:mm')
+                                  .format(display[index].datetime),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),

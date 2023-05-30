@@ -6,6 +6,7 @@ import 'package:sidebarx/sidebarx.dart';
 import 'package:scaled_list/scaled_list.dart';
 import 'package:uosapp/api_Handler/Api_Content.dart';
 import 'package:uosapp/screens/Home_Screens/about_screen.dart';
+import 'package:uosapp/screens/Home_Screens/attendance_details.dart';
 import 'package:uosapp/screens/Home_Screens/notifications_screen.dart';
 import 'package:uosapp/screens/Home_Screens/subjects_screen.dart';
 import 'package:uosapp/screens/Intro_Screens/login/login.dart';
@@ -77,7 +78,7 @@ class _Home_screenState extends State<Home_screen> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.list_alt),
-        title: 'Notifications',
+        title: 'Attendance',
         activeColorSecondary: Colors.amber,
         inactiveColorPrimary: Colors.black,
       ),
@@ -95,7 +96,7 @@ class _Home_screenState extends State<Home_screen> {
       HomeView(),
       Subjects(),
       HomeView(),
-      Notifications_screen(),
+      attendance_Screen(),
       About(),
     ];
   }
@@ -172,12 +173,11 @@ class _HomeViewState extends State<HomeView> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => Notifications_screen()),
+                  MaterialPageRoute(builder: (context) => attendance_Screen()),
                 );
               },
               icon: Icons.roller_shades_closed_rounded,
-              label: 'Announcements',
+              label: 'Attendance!',
             ),
           ],
           theme: SidebarXTheme(
