@@ -1,15 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uosapp/api_Handler/Api_Content.dart';
-import 'package:uosapp/main.dart';
-import 'package:uosapp/screens/Home_View/Home_view.dart';
-import 'package:uosapp/screens/Home_View/pdfscreen.dart';
-import 'package:uosapp/screens/Home_View/pdfviewer.dart';
-import 'package:uosapp/screens/Home_View/youtube_link.dart';
-
-import '../../api_Handler/Models/contentmodel.dart';
+import 'package:uosapp/screens/Home_Screens/Home_view.dart';
+import 'package:uosapp/screens/Home_Screens/pdfviewer.dart';
+import 'package:uosapp/screens/Home_Screens/youtube_link.dart';
 import '../../api_Handler/Models/detailmodel.dart';
 
 class Content_view extends StatefulWidget {

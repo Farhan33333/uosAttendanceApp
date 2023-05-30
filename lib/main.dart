@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uosapp/screens/Home/login/login.dart';
-import 'package:uosapp/screens/Home_View/Home_view.dart';
+import 'package:uosapp/screens/Intro_Screens/login/login.dart';
+import 'package:uosapp/screens/Home_Screens/Home_view.dart';
 import 'package:uosapp/screens/splash/splash_screen.dart';
 
 import 'api_Handler/Api_LoginService.dart';

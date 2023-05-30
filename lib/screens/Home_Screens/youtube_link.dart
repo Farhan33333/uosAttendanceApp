@@ -1,8 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:uosapp/screens/Home_View/Content_view.dart';
-import 'package:uosapp/screens/Home_View/Home_view.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class youtube_player extends StatefulWidget {

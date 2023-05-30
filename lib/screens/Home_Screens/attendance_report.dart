@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scaled_list/scaled_list.dart';
-import 'package:uosapp/screens/Home_View/Home_view.dart';
-import 'package:uosapp/screens/Home_View/attendance_details.dart';
+import 'package:uosapp/screens/Home_Screens/Home_view.dart';
 
 class attendant_report_screen extends StatefulWidget {
   const attendant_report_screen({super.key});

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:uosapp/screens/Home/login/login.dart';
-import 'package:uosapp/screens/Home/login/signup.dart';
+import 'package:uosapp/screens/Intro_Screens/login/login.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class Intro_screen extends StatelessWidget {
+  const Intro_screen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,18 +66,6 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              // GestureDetector(
-              //     onTap: () {
-              //       Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (context) => const RegisterScreen()));
-              //     },
-              //     child: Text(
-              //       'Signup',
-              //       textAlign: TextAlign.center,
-              //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              //     ))
             ],
           ),
         ),

@@ -1,12 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'package:uosapp/screens/Home_View/Home_view.dart';
-import 'package:uosapp/static/input_field.dart';
-import 'package:uosapp/static/input_field_pass.dart';
+import 'package:uosapp/screens/Home_Screens/Home_view.dart';
 import 'package:uosapp/static/large_button.dart';
 import 'package:uosapp/static/small_icon_button.dart';
 import 'package:uosapp/api_Handler/Api_LoginInterface.dart';

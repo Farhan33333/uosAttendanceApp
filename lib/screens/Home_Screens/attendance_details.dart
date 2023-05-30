@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uosapp/screens/Home_View/Content_view.dart';
-import 'package:uosapp/screens/Home_View/Home_view.dart';
-import 'package:uosapp/screens/Home_View/attendance_report.dart';
+import 'package:uosapp/screens/Home_Screens/Home_view.dart';
+import 'package:uosapp/screens/Home_Screens/attendance_report.dart';
 
 import '../../api_Handler/Api_Content.dart';
 import '../../api_Handler/Models/contentmodel.dart';

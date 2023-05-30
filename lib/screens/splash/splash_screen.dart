@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:uosapp/screens/Home/home.dart';
+import 'package:uosapp/screens/Intro_Screens/intro.dart';
 
 class Splash_Screen extends StatefulWidget {
   const Splash_Screen({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Home(),
+          builder: (context) => Intro_screen(),
         ));
   }
 }
